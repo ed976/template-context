@@ -14,6 +14,9 @@ pour que Claude exécute correctement des tâches CRM et vérifie lui-même son 
 4. Jamais d'activation de flow par l'agent — l'activation est une étape humaine
 5. Le token HubSpot ne doit jamais apparaître dans une sortie affichée ou un commit
 6. Tous les appels HubSpot passent par scripts/hs, jamais par un curl ad hoc
+7. Préférer une propriété native existante à la création d'une custom — correspondance
+   sémantique (ex: "secteur" → industry), pas seulement textuelle. S'applique à toute
+   création de propriété et à tout import de companies. Choix documenté dans docs/JOURNAL.md
 
 ## Carte du repo
 - context/connectors/hubspot/ — état du portail HubSpot (schéma, portail, pièges)

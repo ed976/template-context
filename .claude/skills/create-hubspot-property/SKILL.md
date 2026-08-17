@@ -16,6 +16,17 @@ Company — jamais Contact (voir règle dure #3 du CLAUDE.md).
    (nom exact et variantes proches). Si une propriété existante couvre déjà le besoin,
    s'arrêter ici et le signaler plutôt que de créer un doublon.
 
+1bis. **Préférer le natif.**
+   Avant de créer une propriété custom, chercher dans `schema.generated.json` si un
+   concept équivalent existe déjà sous forme de propriété native HubSpot (ex : un
+   champ "secteur" correspond probablement à `industry`, un champ "effectif" à
+   `numberofemployees`, un champ "domaine" à `domain`). La correspondance est
+   sémantique, pas un match texte exact sur le nom du champ source. Si une
+   propriété native couvre le concept, l'utiliser et NE PAS créer de custom, même
+   si le nom du champ source ne correspond pas mot pour mot. Documenter ce choix
+   dans `docs/JOURNAL.md`, une ligne par mapping, au format :
+   `YYYY-MM-DD — source: <champ source> → HubSpot: <nom propriété> (native|créée) — <pourquoi>`
+
 2. **Construire le payload.**
    Format conforme à l'API Properties HubSpot (`name`, `label`, `type`, `fieldType`,
    `groupName`, `description`, `options` si `enumeration`). Respecter les conventions
@@ -39,6 +50,8 @@ Company — jamais Contact (voir règle dure #3 du CLAUDE.md).
 
 ## Interdits
 
-- Ne jamais créer de propriété sans être passé par l'étape 1.
+- Ne jamais créer de propriété sans être passé par les étapes 1 et 1bis.
+- Ne jamais créer une propriété custom quand une propriété native couvre déjà le
+  concept (même sous un nom différent) sans le justifier dans `docs/JOURNAL.md`.
 - Ne jamais éditer `schema.generated.json` à la main — uniquement via régénération.
 - Ne jamais créer de propriété sur Contact.
