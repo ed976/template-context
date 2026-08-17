@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Wrapper curl minimal et authentifié vers l'API HubSpot.
+# Usage:
+#   ./scripts/hs GET  /crm/v3/objects/companies?limit=1
+#   ./scripts/hs POST /crm/v3/properties/companies '{"name": "..."}'
+set -euo pipefail
+
+if [ -z "${HUBSPOT_TOKEN:-}" ]; then
+  echo "Erreur: HUBSPOT_TOKEN est vide ou non défini. Charge-le via .env (source .env) avant d'appeler scripts/hs." >&2
+  exit 1
+fi
+
+METHOD="${1:-}"
+PATH_ARG="${2:-}"
+BODY="${3:-}"
+
+if [ -z "$METHOD" ] || [ -z "$PATH_ARG" ]; then
+  echo "Usage: $0 <METHOD> <PATH> [BODY_JSON]" >&2
+  echo "Exemple: $0 GET /crm/v3/objects/companies?limit=1" >&2
+  exit 1
+fi
+
+ARGS=(-sS -X "$METHOD"
+  -H "Authorization: Bearer ${HUBSPOT_TOKEN}"
+  -H "Content-Type: application/json")
+
+if [ -n "$BODY" ]; then
+  ARGS+=(-d "$BODY")
+fi
+
+curl "${ARGS[@]}" "https://api.hubapi.com${PATH_ARG}"

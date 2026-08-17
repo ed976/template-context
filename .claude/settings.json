@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "deny": [
+      "Write(*.generated.*)",
+      "Write(**/*.generated.*)",
+      "Edit(*.generated.*)",
+      "Edit(**/*.generated.*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/guard-hubspot-write.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
