@@ -33,8 +33,9 @@ par l'agent (règle dure #4).
 
 5. **Appliquer via scripts/hs.**
    `./scripts/hs POST /automation/v4/flows "$(cat definitions/flows/<nom>.json)"`
-   Jamais de curl ad hoc (règle dure #6). Le hook `guard-hubspot-write.sh` bloquera
-   tout appel `/automation/` qui n'a pas `isEnabled: false` dans le payload.
+   Jamais de curl ad hoc (règle dure #6). Le hook `guard-hubspot-write.sh` reconnaît
+   l'appel `scripts/hs POST|PATCH /automation/...` (arguments positionnels, pas une
+   URL) et bloquera tout appel sans `"isEnabled": false` explicite dans le payload.
 
 6. **Ne jamais activer.**
    L'agent ne bascule jamais `isEnabled` à `true`, ni via l'API ni via l'UI.
